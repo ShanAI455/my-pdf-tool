@@ -26,7 +26,7 @@
                     <i class="fa-solid fa-lock"></i>
                 </div>
                 <h3 class="text-xl font-extrabold text-slate-800">ආරක්ෂිත මෙවලම් ප්‍රවේශය</h3>
-                <p class="text-slate-500 text-xs mt-1">මුදල් ගෙවීමෙන් පසු ඔබේ ඊමේල් ලිපිනයට සහ WhatsApp වෙත ලැබුණු විස්තර ඇතුළත් කරන්න.</p>
+                <p class="text-slate-500 text-xs mt-1">ඔබේ ඊමේල් ලිපිනය සහ WhatsApp හරහා ලැබුණු මුරපදය ඇතුළත් කරන්න. (මෙම උපාංගය මත පමණක් ස්ථිරව ක්‍රියාත්මක වේ).</p>
             </div>
 
             <!-- Login Form -->
@@ -37,7 +37,7 @@
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-600 mb-1">ප්‍රවේශ මුරපදය (Password)</label>
-                    <input type="text" id="access-password-input" required placeholder="ස්වයංක්‍රීයව ලැබුණු මුරපදය" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 font-mono">
+                    <input type="text" id="access-password-input" required placeholder="ලැබුණු මුරපදය ඇතුළත් කරන්න" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 font-mono">
                 </div>
                 <button type="submit" id="loginBtn" class="w-full py-3 bg-indigo-600 text-white font-bold rounded-xl text-sm shadow-md shadow-indigo-600/20 hover:bg-indigo-700 transition-colors">
                     මෙවලම අගුළු හරින්න (Unlock)
@@ -175,14 +175,20 @@
 
     <!-- JavaScript Processing & UI Logic -->
     <script>
-        // අලුත් Google Apps Script Web App URL එක මෙතැනට සම්බන්ධ කර ඇත
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbyVsy66T9Jyvi2_gEGD7sxNZT9jNM727-w-e4pK5jYxkLWQwox7pzmCyeQ0Gx5Z21wN/exec';
+        // අලුත්ම Google Apps Script Web App URL එක මෙහි ඇත
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbz3xSK6pqAhnqAHoKOutsVSjQxt7xkfkoEghGjCK2v5dV1iA0I175MJeyp9eM1gulwQ/exec';
 
-        // Check if user already logged in before on this browser
+        // Check if user already logged in on this specific device
         window.addEventListener('DOMContentLoaded', () => {
             const isAuth = localStorage.getItem("isToolUnlocked");
+            const savedEmail = localStorage.getItem("userEmail");
+            
             if (isAuth === "true") {
                 document.getElementById('auth-modal').classList.add('hidden');
+            }
+            if (savedEmail) {
+                const loginEmailInput = document.getElementById('loginEmail');
+                if (loginEmailInput) loginEmailInput.value = savedEmail;
             }
         });
 
@@ -197,12 +203,13 @@
             loginBtn.textContent = 'පරීක්ෂා කරමින් පවතී...';
 
             try {
-                // Apps Script වෙත ඊමේල් එක සහ පාස්වර්ඩ් එක යවා පරීක්ෂා කිරීම
                 const response = await fetch(`${scriptURL}?email=${encodeURIComponent(email)}&password=${encodeURIComponent(pass)}`);
                 const result = await response.json();
 
                 if (result.status === "success") {
+                    // Save login status and email to this device storage
                     localStorage.setItem("isToolUnlocked", "true");
+                    localStorage.setItem("userEmail", email);
                     document.getElementById('auth-modal').classList.add('hidden');
                 } else {
                     alert("වැරදි ඊමේල් ලිපිනයක් හෝ මුරපදයකි! කරුණාකර ඔබගේ නිවැරදි විස්තර ඇතුළත් කරන්න.");
@@ -219,10 +226,11 @@
         // Logout function
         function logoutUser() {
             localStorage.removeItem("isToolUnlocked");
+            localStorage.removeItem("userEmail");
             location.reload();
         }
 
-        // Send Request to Google Sheet via Google Apps Script Web App API (Auto Generates Random Password in Sheet)
+        // Send Request to Google Sheet via Google Apps Script Web App API
         async function sendAccessRequest(e) {
             e.preventDefault();
             const btn = document.getElementById('requestBtn');
