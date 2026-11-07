@@ -26,7 +26,7 @@
                     <i class="fa-solid fa-lock"></i>
                 </div>
                 <h3 class="text-xl font-extrabold text-slate-800">ආරක්ෂිත මෙවලම් ප්‍රවේශය</h3>
-                <p class="text-slate-500 text-xs mt-1">ඔබේ ඊමේල් ලිපිනය සහ WhatsApp හරහා ලැබුණු මුරපදය ඇතුළත් කරන්න. (මෙම උපාංගය මත පමණක් ස්ථිරව ක්‍රියාත්මක වේ).</p>
+                <p class="text-slate-500 text-xs mt-1">ඔබේ ඊමේල් ලිපිනය සහ WhatsApp හරහා ලැබුණු මුරපදය ඇතුළත් කරන්න. (මෙම උපාංගය මත පමණක් ස්ථිරව ලොක් වේ).</p>
             </div>
 
             <!-- Login Form -->
@@ -175,8 +175,18 @@
 
     <!-- JavaScript Processing & UI Logic -->
     <script>
-        // අලුත්ම Google Apps Script Web App URL එක මෙහි ඇත
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbz3xSK6pqAhnqAHoKOutsVSjQxt7xkfkoEghGjCK2v5dV1iA0I175MJeyp9eM1gulwQ/exec';
+        // අලුත්ම Google Apps Script Web App URL එක
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzO6SgldF6G8ZjcaJVUf9TBLiKCFiu1IHixQ-NuAywfYGZ6SUSIhmz48hdvHnjvCK6K/exec';
+
+        // Unique Device Token එකක් සෑදීම හෝ ලබාගැනීම
+        function getDeviceToken() {
+            let token = localStorage.getItem("deviceToken");
+            if (!token) {
+                token = 'dev_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
+                localStorage.setItem("deviceToken", token);
+            }
+            return token;
+        }
 
         // Check if user already logged in on this specific device
         window.addEventListener('DOMContentLoaded', () => {
@@ -192,25 +202,27 @@
             }
         });
 
-        // Handle Login Password Check with Google Sheet Verification via doGet
+        // Handle Login with Device Locking Verification
         async function handleLogin(e) {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value.trim();
             const pass = document.getElementById('access-password-input').value.trim();
             const loginBtn = document.getElementById('loginBtn');
+            const deviceToken = getDeviceToken();
             
             loginBtn.disabled = true;
             loginBtn.textContent = 'පරීක්ෂා කරමින් පවතී...';
 
             try {
-                const response = await fetch(`${scriptURL}?email=${encodeURIComponent(email)}&password=${encodeURIComponent(pass)}`);
+                const response = await fetch(`${scriptURL}?email=${encodeURIComponent(email)}&password=${encodeURIComponent(pass)}&token=${encodeURIComponent(deviceToken)}`);
                 const result = await response.json();
 
                 if (result.status === "success") {
-                    // Save login status and email to this device storage
                     localStorage.setItem("isToolUnlocked", "true");
                     localStorage.setItem("userEmail", email);
                     document.getElementById('auth-modal').classList.add('hidden');
+                } else if (result.status === "device_locked") {
+                    alert("ආරක්ෂක දෝෂයකි! මෙම ගිණුම දැනටමත් වෙනත් උපාංගයක (Device එකක) ලියාපදිංචි වී ඇත. වෙනත් උපාංගවලින් ප්‍රවේශ විය නොහැක.");
                 } else {
                     alert("වැරදි ඊමේල් ලිපිනයක් හෝ මුරපදයකි! කරුණාකර ඔබගේ නිවැරදි විස්තර ඇතුළත් කරන්න.");
                 }
@@ -230,7 +242,7 @@
             location.reload();
         }
 
-        // Send Request to Google Sheet via Google Apps Script Web App API
+        // Send Request to Google Sheet
         async function sendAccessRequest(e) {
             e.preventDefault();
             const btn = document.getElementById('requestBtn');
