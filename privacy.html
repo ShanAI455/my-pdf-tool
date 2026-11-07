@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Web Tool Suite</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 h-screen flex flex-col md:flex-row overflow-hidden">
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-full md:w-72 bg-slate-900 text-slate-300 flex-shrink-0 border-r border-slate-800 flex flex-col justify-between">
+        <div>
+            <!-- Brand Logo Area -->
+            <div class="p-6 border-b border-slate-800/80 flex items-center gap-3 bg-slate-950/40">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 text-white flex items-center justify-center font-bold text-lg shadow-lg shadow-indigo-500/20">
+                    <i class="fa-solid fa-cubes"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-white tracking-wide text-sm">සියලු දේ එකම තැනින්</h1>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="p-4 space-y-1.5">
+                <a href="index.html" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm text-slate-400 hover:bg-slate-800/60 hover:text-slate-200 transition-all duration-200 group">
+                    <i class="fa-solid fa-house w-5 text-center text-slate-500 group-hover:text-indigo-400 transition-colors"></i> Home Dashboard
+                </a>
+               
+                <!-- Separator Line -->
+                <div class="pt-3 pb-1">
+                    <div class="border-t border-slate-800"></div>
+                </div>
+
+                <!-- Extra Links: About & Privacy -->
+                <a href="about.html" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl font-medium text-sm text-slate-400 hover:bg-slate-800/60 hover:text-slate-200 transition-all duration-200 group">
+                    <i class="fa-solid fa-circle-info w-5 text-center text-slate-500 group-hover:text-sky-400 transition-colors"></i> About Us
+                </a>
+                <a href="privacy.html" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl font-medium text-sm bg-indigo-600 text-white shadow-md shadow-indigo-600/20 transition-all duration-200">
+                    <i class="fa-solid fa-shield-halved w-5 text-center text-indigo-200"></i> Privacy Policy
+                </a>
+            </nav>
+        </div>
+
+        <!-- Sidebar Footer Status -->
+        <div class="p-4 m-4 rounded-xl bg-slate-800/40 border border-slate-800 text-xs text-slate-400 flex items-center justify-between">
+            <span class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Server Active
+            </span>
+            <span class="font-mono text-[10px] bg-slate-800 px-2 py-0.5 rounded text-slate-300">v1.0.0</span>
+        </div>
+    </aside>
+
+    <!-- Main Content Area Container -->
+    <div class="flex-grow flex flex-col h-screen overflow-hidden">
+        
+        <!-- Top Navbar (Fixed) -->
+        <header class="bg-white/80 backdrop-blur-md border-b border-slate-200/80 py-4 px-8 flex justify-between items-center z-10 shadow-sm flex-shrink-0">
+            <h2 class="text-xl font-extrabold text-slate-800 tracking-tight">Privacy Policy</h2>
+            <div class="flex items-center gap-3">
+                <span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span> Privacy Guaranteed
+                </span>
+            </div>
+        </header>
+
+        <!-- Main Workspace (Only This Part Scrolls) -->
+        <main class="flex-grow p-6 md:p-10 max-w-4xl w-full mx-auto space-y-6 overflow-y-auto">
+            
+            <!-- Hero Card -->
+            <div class="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm flex items-center gap-5">
+                <div class="w-14 h-14 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-2xl font-bold flex-shrink-0">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-800">Your Privacy & Security First</h3>
+                    <p class="text-slate-500 text-xs mt-1">Learn how our Client-Side Web Tool Suite handles your files and data with 100% privacy.</p>
+                </div>
+            </div>
+
+            <!-- Privacy Policy Points -->
+            <div class="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm space-y-6 text-sm text-slate-600 leading-relaxed">
+                <div>
+                    <h4 class="font-bold text-slate-800 text-base mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-microchip text-indigo-500"></i> 1. 100% Client-Side Processing
+                    </h4>
+                    <p>
+                        All operations performed within this Web Tool Suite (including PDF printing, merging, splitting, and image modifications) are processed locally inside your web browser. Your documents and files are **never uploaded to any external server**.
+                    </p>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <div>
+                    <h4 class="font-bold text-slate-800 text-base mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-database text-emerald-500"></i> 2. No Data Collection
+                    </h4>
+                    <p>
+                        We do not collect, store, or track personal identification details, document metadata, or file content. Your data remains strictly confidential on your personal device at all times.
+                    </p>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <div>
+                    <h4 class="font-bold text-slate-800 text-base mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-cookie-bite text-amber-500"></i> 3. Cookies & Storage
+                    </h4>
+                    <p>
+                        This application does not use tracking cookies or third-party analytics to profile users. Browser local storage may only be used to temporarily retain local UI preferences.
+                    </p>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <div>
+                    <h4 class="font-bold text-slate-800 text-base mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-headset text-sky-500"></i> 4. Contact Information
+                    </h4>
+                    <p>
+                        If you have any questions or security concerns regarding this Web Tool Suite, feel free to reach out to our team at **S&D IT Lab**.
+                    </p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Centered Fixed Footer (Bottom Pin) -->
+        <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 flex-shrink-0 z-10 shadow-lg">
+            <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-center gap-2">
+                <p class="font-medium">&copy; Design & Developed by <span class="text-indigo-600 font-bold">S&D IT Lab</span></p>
+                <span class="hidden sm:inline text-slate-300">&bull;</span>
+                <p class="text-slate-400">All rights reserved 2026</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
