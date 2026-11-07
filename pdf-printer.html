@@ -26,16 +26,20 @@
                     <i class="fa-solid fa-lock"></i>
                 </div>
                 <h3 class="text-xl font-extrabold text-slate-800">ආරක්ෂිත මෙවලම් ප්‍රවේශය</h3>
-                <p class="text-slate-500 text-xs mt-1">මෙම මෙවලම භාවිතා කිරීමට මුදල් ගෙවීමෙන් පසු WhatsApp හරහා ලබාගත් මුරපදය ඇතුළත් කරන්න.</p>
+                <p class="text-slate-500 text-xs mt-1">මුදල් ගෙවීමෙන් පසු ඔබේ ඊමේල් ලිපිනයට සහ WhatsApp වෙත ලැබුණු විස්තර ඇතුළත් කරන්න.</p>
             </div>
 
             <!-- Login Form -->
             <form onsubmit="handleLogin(event)" class="space-y-3">
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">ඔබේ ප්‍රවේශ මුරපදය ඇතුළත් කරන්න</label>
-                    <input type="text" id="access-password-input" required placeholder="පරිපාලක විසින් ලබා දුන් මුරපදය" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 font-mono">
+                    <label class="block text-xs font-bold text-slate-600 mb-1">ඔබේ Gmail ලිපිනය</label>
+                    <input type="email" id="loginEmail" required placeholder="name@gmail.com" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600">
                 </div>
-                <button type="submit" class="w-full py-3 bg-indigo-600 text-white font-bold rounded-xl text-sm shadow-md shadow-indigo-600/20 hover:bg-indigo-700 transition-colors">
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1">ප්‍රවේශ මුරපදය (Password)</label>
+                    <input type="text" id="access-password-input" required placeholder="ස්වයංක්‍රීයව ලැබුණු මුරපදය" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 font-mono">
+                </div>
+                <button type="submit" id="loginBtn" class="w-full py-3 bg-indigo-600 text-white font-bold rounded-xl text-sm shadow-md shadow-indigo-600/20 hover:bg-indigo-700 transition-colors">
                     මෙවලම අගුළු හරින්න (Unlock)
                 </button>
             </form>
@@ -46,7 +50,7 @@
             <div class="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
                 <div class="text-center">
                     <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">ප්‍රවේශය අවශ්‍යද?</h4>
-                    <p class="text-[11px] text-slate-500 mt-0.5">පහතින් ඔබේ විස්තර ඇතුළත් කර, ගෙවීම් කටයුතු සඳහා WhatsApp හරහා සම්බන්ධ වන්න.</p>
+                    <p class="text-[11px] text-slate-500 mt-0.5">පහතින් ඔබේ විස්තර ලබා දෙන්න. එවිට පද්ධතිය මඟින් ස්වයංක්‍රීයව මුරපදයක් ජනනය වේ.</p>
                 </div>
 
                 <form id="accessForm" onsubmit="sendAccessRequest(event)" class="space-y-2.5">
@@ -61,8 +65,8 @@
 
             <!-- WhatsApp Direct Contact Button -->
             <div>
-                <a href="https://wa.me/94712093811?text=Hi,%20I%20have%20submitted%20my%20details%20for%20Batch%20PDF%20Printer%20access.%20Please%20provide%20payment%20details." target="_blank" class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs transition-colors shadow-sm">
-                    <i class="fa-brands fa-whatsapp text-sm"></i> මුදල් ගෙවා WhatsApp හරහා මුරපදය ලබාගන්න (071 20 93 811)
+                <a href="https://wa.me/94712093811?text=Hi,%20I%20have%20submitted%20my%20details%20for%20Batch%20PDF%20Printer%20access.%20Please%20verify%20payment%20and%20provide%20my%20password." target="_blank" class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs transition-colors shadow-sm">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> මුදල් ගෙවා WhatsApp හරහා තහවුරු කරගන්න (071 20 93 811)
                 </a>
             </div>
         </div>
@@ -171,6 +175,9 @@
 
     <!-- JavaScript Processing & UI Logic -->
     <script>
+        // අලුත් Google Apps Script Web App URL එක මෙතැනට සම්බන්ධ කර ඇත
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyVsy66T9Jyvi2_gEGD7sxNZT9jNM727-w-e4pK5jYxkLWQwox7pzmCyeQ0Gx5Z21wN/exec';
+
         // Check if user already logged in before on this browser
         window.addEventListener('DOMContentLoaded', () => {
             const isAuth = localStorage.getItem("isToolUnlocked");
@@ -179,16 +186,33 @@
             }
         });
 
-        // Handle Login Password Check
-        function handleLogin(e) {
+        // Handle Login Password Check with Google Sheet Verification via doGet
+        async function handleLogin(e) {
             e.preventDefault();
+            const email = document.getElementById('loginEmail').value.trim();
             const pass = document.getElementById('access-password-input').value.trim();
+            const loginBtn = document.getElementById('loginBtn');
             
-            if (pass.length >= 6) { 
-                localStorage.setItem("isToolUnlocked", "true");
-                document.getElementById('auth-modal').classList.add('hidden');
-            } else {
-                alert("වැරදි මුරපදයකි! කරුණාකර WhatsApp හරහා ලබා දුන් නිවැරදි මුරපදය ඇතුළත් කරන්න.");
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'පරීක්ෂා කරමින් පවතී...';
+
+            try {
+                // Apps Script වෙත ඊමේල් එක සහ පාස්වර්ඩ් එක යවා පරීක්ෂා කිරීම
+                const response = await fetch(`${scriptURL}?email=${encodeURIComponent(email)}&password=${encodeURIComponent(pass)}`);
+                const result = await response.json();
+
+                if (result.status === "success") {
+                    localStorage.setItem("isToolUnlocked", "true");
+                    document.getElementById('auth-modal').classList.add('hidden');
+                } else {
+                    alert("වැරදි ඊමේල් ලිපිනයක් හෝ මුරපදයකි! කරුණාකර ඔබගේ නිවැරදි විස්තර ඇතුළත් කරන්න.");
+                }
+            } catch (err) {
+                console.error(err);
+                alert("සම්බන්ධ වීමේ දෝෂයක් සිදු විය. කරුණාකර නැවත උත්සාහ කරන්න.");
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'මෙවලම අගුළු හරින්න (Unlock)';
             }
         }
 
@@ -198,15 +222,13 @@
             location.reload();
         }
 
-        // Send Request to Google Sheet via Google Apps Script Web App API
+        // Send Request to Google Sheet via Google Apps Script Web App API (Auto Generates Random Password in Sheet)
         async function sendAccessRequest(e) {
             e.preventDefault();
             const btn = document.getElementById('requestBtn');
             const msg = document.getElementById('responseMsg');
             const name = document.getElementById('userName').value;
             const email = document.getElementById('userEmail').value;
-            
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbzHIG7qoYLR5oM-GMHdBE4PDF4_Qqj-pMzAKPDwbhNxWfUwTlSVwpjTy_QTrJ9bk3Nx/exec';
             
             btn.disabled = true;
             btn.textContent = 'විස්තර යවමින් පවතී...';
@@ -220,7 +242,7 @@
                     body: JSON.stringify({ name: name, email: email })
                 });
                 
-                msg.textContent = 'විස්තර සාර්ථකව යවන ලදී! දැන් පහත WhatsApp බටන් එක ක්ලික් කර මුදල් ගෙවා ඔබේ මුරපදය ලබා ගන්න.';
+                msg.textContent = 'විස්තර සාර්ථකව යවන ලදී! පද්ධතිය විසින් ඔබ සඳහා මුරපදයක් ජනනය කර ඇත. දැන් පහත WhatsApp බටන් එක ක්ලික් කර මුදල් ගෙවා ඔබේ මුරපදය ලබා ගන්න.';
                 msg.className = 'text-[11px] text-center font-medium text-emerald-600 mt-2';
                 document.getElementById('accessForm').reset();
             } catch (err) {
