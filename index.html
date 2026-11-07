@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Tool Suite</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 h-screen flex flex-col md:flex-row overflow-hidden">
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-full md:w-72 bg-slate-900 text-slate-300 flex-shrink-0 border-r border-slate-800 flex flex-col justify-between">
+        <div>
+            <!-- Brand Logo Area -->
+            <div class="p-6 border-b border-slate-800/80 flex items-center gap-3 bg-slate-950/40">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 text-white flex items-center justify-center font-bold text-lg shadow-lg shadow-indigo-500/20">
+                    <i class="fa-solid fa-cubes"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-white tracking-wide text-sm">සියලු දේ එකම තැනින්</h1>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="p-4 space-y-1.5">
+                <a href="index.html" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm bg-indigo-600 text-white shadow-md shadow-indigo-600/20 transition-all duration-200">
+                    <i class="fa-solid fa-house w-5 text-center text-indigo-200"></i> Home Dashboard
+                </a>
+            </nav>
+        </div>
+
+        <!-- Sidebar Footer Status -->
+        <div class="p-4 m-4 rounded-xl bg-slate-800/40 border border-slate-800 text-xs text-slate-400 flex items-center justify-between">
+            <span class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Server Active
+            </span>
+            <span class="font-mono text-[10px] bg-slate-800 px-2 py-0.5 rounded text-slate-300">v1.0.0</span>
+        </div>
+    </aside>
+
+    <!-- Main Content Area Container -->
+    <div class="flex-grow flex flex-col h-screen overflow-hidden">
+        
+        <!-- Top Navbar (Fixed) -->
+        <header class="bg-white/80 backdrop-blur-md border-b border-slate-200/80 py-4 px-8 flex justify-between items-center z-10 shadow-sm flex-shrink-0">
+            <h2 class="text-xl font-extrabold text-slate-800 tracking-tight">Home Dashboard</h2>
+            <div class="flex items-center gap-3">
+                <span class="hidden sm:inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-indigo-50 text-indigo-700 border border-indigo-100">
+                    <i class="fa-regular fa-clock mr-1.5 text-indigo-500"></i> <span id="live-time">Localhost</span>
+                </span>
+                <span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span> Device Online
+                </span>
+            </div>
+        </header>
+
+        <!-- Main Workspace (Only This Part Scrolls) -->
+        <main class="flex-grow p-6 md:p-10 max-w-6xl w-full mx-auto space-y-8 overflow-y-auto">
+            
+            <!-- Hero Banner -->
+            <div class="bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-700 rounded-3xl p-8 md:p-10 text-white shadow-xl shadow-indigo-600/10 relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl pointer-events-none">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <div class="relative z-10 max-w-2xl">
+    
+                    <h2 class="text-2xl md:text-3xl font-extrabold mb-3 tracking-tight">Welcome to your Web App Hub</h2>
+                    <p class="text-indigo-100 text-sm md:text-base leading-relaxed opacity-90">
+                        ඔයාගේ local workflow එකට අවශ්‍ය සියලුම Tools වෙන වෙනම modular pages ලෙස පහසුවෙන් භාවිත කරන්න.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tools Grid Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Tool 1: Batch PDF Printer -->
+                <a href="pdf-printer.html" class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl mb-5 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 shadow-sm">
+                            <i class="fa-solid fa-print"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-800 text-lg mb-2 group-hover:text-indigo-600 transition-colors">Batch PDF Printer</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed mb-6">
+                            PDF ගොඩක් එකපාර Drag & Drop කරලා, පිළිවෙළ සකසා එකම print job එකක් ලෙස පහසුවෙන් print කරන්න.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-600 group-hover:translate-x-1.5 transition-transform">
+                            Open Tool <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </span>
+                        <span class="text-[10px] font-semibold bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-md">Active</span>
+                    </div>
+                </a>
+
+                <!-- Tool 2: PDF Merger & Splitter -->
+                <a href="pdf-merger.html" class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl mb-5 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300 shadow-sm">
+                            <i class="fa-solid fa-file-pdf"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-800 text-lg mb-2 group-hover:text-emerald-600 transition-colors">PDF Merger & Splitter</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed mb-6">
+                            PDF ෆයිල් එකතු කිරීමට (Merge) සහ පිටු වෙන් කිරීමට (Split) අවශ්‍ය dynamic local tool එක.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 group-hover:translate-x-1.5 transition-transform">
+                            Open Tool <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </span>
+                        <span class="text-[10px] font-semibold bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-md">Pending</span>
+                    </div>
+                </a>
+
+                <!-- Tool 3: Image Utilities -->
+                <a href="img-tools.html" class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-2xl mb-5 group-hover:bg-amber-600 group-hover:text-white transition-all duration-300 shadow-sm">
+                            <i class="fa-solid fa-image"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-800 text-lg mb-2 group-hover:text-amber-600 transition-colors">Image Utilities</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed mb-6">
+                            JPG සහ PNG පින්තූර PDF වලට convert කිරීම සහ ප්‍රමාණය අඩු කර ගැනීමට (Compress) අවශ්‍ය tools.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="inline-flex items-center gap-1.5 text-xs font-bold text-amber-600 group-hover:translate-x-1.5 transition-transform">
+                            Open Tool <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </span>
+                        <span class="text-[10px] font-semibold bg-amber-50 text-amber-600 px-2 py-0.5 rounded-md">Pending</span>
+                    </div>
+                </a>
+
+            </div>
+        </main>
+
+        <!-- Centered Fixed Footer (Bottom Pin) -->
+        <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 flex-shrink-0 z-10 shadow-lg">
+            <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-center gap-2">
+                <p class="font-medium">&copy; Design & Developed by <span class="text-indigo-600 font-bold">S&D IT Lab</span></p>
+                <span class="hidden sm:inline text-slate-300">&bull;</span>
+                <p class="text-slate-400">All rights reserved 2026</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Live Clock Script -->
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            const timeEl = document.getElementById('live-time');
+            if(timeEl) timeEl.textContent = timeString;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+    </script>
+</body>
+</html>
