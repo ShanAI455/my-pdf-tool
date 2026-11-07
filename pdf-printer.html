@@ -25,18 +25,18 @@
                 <div class="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 shadow-inner">
                     <i class="fa-solid fa-lock"></i>
                 </div>
-                <h3 class="text-xl font-extrabold text-slate-800">Protected Tool Access</h3>
-                <p class="text-slate-500 text-xs mt-1">Enter the password provided via WhatsApp after payment to unlock.</p>
+                <h3 class="text-xl font-extrabold text-slate-800">ආරක්ෂිත මෙවලම් ප්‍රවේශය</h3>
+                <p class="text-slate-500 text-xs mt-1">මෙම මෙවලම භාවිතා කිරීමට මුදල් ගෙවීමෙන් පසු WhatsApp හරහා ලබාගත් මුරපදය ඇතුළත් කරන්න.</p>
             </div>
 
             <!-- Login Form -->
             <form onsubmit="handleLogin(event)" class="space-y-3">
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">Enter Your Access Password</label>
-                    <input type="text" id="access-password-input" required placeholder="Enter password from admin" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 font-mono">
+                    <label class="block text-xs font-bold text-slate-600 mb-1">ඔබේ ප්‍රවේශ මුරපදය ඇතුළත් කරන්න</label>
+                    <input type="text" id="access-password-input" required placeholder="පරිපාලක විසින් ලබා දුන් මුරපදය" class="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 font-mono">
                 </div>
                 <button type="submit" class="w-full py-3 bg-indigo-600 text-white font-bold rounded-xl text-sm shadow-md shadow-indigo-600/20 hover:bg-indigo-700 transition-colors">
-                    Unlock Tool
+                    මෙවලම අගුළු හරින්න (Unlock)
                 </button>
             </form>
 
@@ -45,15 +45,15 @@
             <!-- Request Access Form & WhatsApp Notice -->
             <div class="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
                 <div class="text-center">
-                    <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Need Access?</h4>
-                    <p class="text-[11px] text-slate-500 mt-0.5">Register your details below, then contact via WhatsApp to complete payment.</p>
+                    <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">ප්‍රවේශය අවශ්‍යද?</h4>
+                    <p class="text-[11px] text-slate-500 mt-0.5">පහතින් ඔබේ විස්තර ඇතුළත් කර, ගෙවීම් කටයුතු සඳහා WhatsApp හරහා සම්බන්ධ වන්න.</p>
                 </div>
 
                 <form id="accessForm" onsubmit="sendAccessRequest(event)" class="space-y-2.5">
-                    <input type="text" id="userName" required placeholder="Your Name" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600">
-                    <input type="email" id="userEmail" required placeholder="Your Gmail Address" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600">
+                    <input type="text" id="userName" required placeholder="ඔබේ නම" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600">
+                    <input type="email" id="userEmail" required placeholder="ඔබේ Gmail ලිපිනය" class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600">
                     <button type="submit" id="requestBtn" class="w-full py-2.5 bg-slate-900 text-white font-bold rounded-xl text-xs hover:bg-slate-800 transition-colors shadow-sm">
-                        Submit Details for Access
+                        ප්‍රවේශය සඳහා විස්තර යවන්න
                     </button>
                 </form>
                 <p id="responseMsg" class="text-[11px] text-center font-medium hidden"></p>
@@ -62,7 +62,7 @@
             <!-- WhatsApp Direct Contact Button -->
             <div>
                 <a href="https://wa.me/94712093811?text=Hi,%20I%20have%20submitted%20my%20details%20for%20Batch%20PDF%20Printer%20access.%20Please%20provide%20payment%20details." target="_blank" class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs transition-colors shadow-sm">
-                    <i class="fa-brands fa-whatsapp text-sm"></i> Pay & Get Password via WhatsApp (071 20 93 811)
+                    <i class="fa-brands fa-whatsapp text-sm"></i> මුදල් ගෙවා WhatsApp හරහා මුරපදය ලබාගන්න (071 20 93 811)
                 </a>
             </div>
         </div>
@@ -184,12 +184,11 @@
             e.preventDefault();
             const pass = document.getElementById('access-password-input').value.trim();
             
-            // ඔබට අවශ්‍ය නම් පාස්වර්ඩ් එක පරීක්ෂා කිරීම (අක්ෂර 6කට වැඩි නම් හෝ ඔබ ලබා දුන් අගය)
             if (pass.length >= 6) { 
                 localStorage.setItem("isToolUnlocked", "true");
                 document.getElementById('auth-modal').classList.add('hidden');
             } else {
-                alert("Invalid Password! Please enter the password provided via WhatsApp.");
+                alert("වැරදි මුරපදයකි! කරුණාකර WhatsApp හරහා ලබා දුන් නිවැරදි මුරපදය ඇතුළත් කරන්න.");
             }
         }
 
@@ -207,11 +206,10 @@
             const name = document.getElementById('userName').value;
             const email = document.getElementById('userEmail').value;
             
-            // ඔබේ අලුත්ම Google Apps Script Web App URL එක මෙහි ඇත:
             const scriptURL = 'https://script.google.com/macros/s/AKfycbzHIG7qoYLR5oM-GMHdBE4PDF4_Qqj-pMzAKPDwbhNxWfUwTlSVwpjTy_QTrJ9bk3Nx/exec';
             
             btn.disabled = true;
-            btn.textContent = 'Submitting details...';
+            btn.textContent = 'විස්තර යවමින් පවතී...';
             msg.classList.add('hidden');
             
             try {
@@ -222,15 +220,15 @@
                     body: JSON.stringify({ name: name, email: email })
                 });
                 
-                msg.textContent = 'Details submitted successfully! Now click the WhatsApp button below to pay and get your password.';
+                msg.textContent = 'විස්තර සාර්ථකව යවන ලදී! දැන් පහත WhatsApp බටන් එක ක්ලික් කර මුදල් ගෙවා ඔබේ මුරපදය ලබා ගන්න.';
                 msg.className = 'text-[11px] text-center font-medium text-emerald-600 mt-2';
                 document.getElementById('accessForm').reset();
             } catch (err) {
-                msg.textContent = 'Failed to connect. Please WhatsApp directly: 071 20 93 811.';
+                msg.textContent = 'සම්බන්ධ වීම අසාර්ථකයි. කරුණාකර WhatsApp හරහා කෙලින්ම සම්බන්ධ වන්න: 071 20 93 811.';
                 msg.className = 'text-[11px] text-center font-medium text-rose-600 mt-2';
             } finally {
                 btn.disabled = false;
-                btn.textContent = 'Submit Details for Access';
+                btn.textContent = 'ප්‍රවේශය සඳහා විස්තර යවන්න';
                 msg.classList.remove('hidden');
             }
         }
