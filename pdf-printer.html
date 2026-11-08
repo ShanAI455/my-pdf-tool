@@ -385,11 +385,19 @@
             try {
                 const mergedPdf = await PDFLib.PDFDocument.create();
 
-                for (let file of selectedFiles) {
+                for (let i = 0; i < selectedFiles.length; i++) {
+                    const file = selectedFiles[i];
                     const arrayBuffer = await file.arrayBuffer();
                     const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
                     const copiedPages = await mergedPdf.copyPages(pdfDoc, pdfDoc.getPageIndices());
+                    
                     copiedPages.forEach((page) => mergedPdf.addPage(page));
+
+                    // दोन्ही පැති (Both side) ප්‍රින්ට් වීමේදී PDF එකක පිටු ගණන ඔත්තේ (Odd) නම්, 
+                    // ඊළඟ PDF එක වෙනත් අලුත් කොළයකින් ආරම්භ වීමට Blank Page එකක් එකතු කිරීම
+                    if (i < selectedFiles.length - 1 && copiedPages.length % 2 !== 0) {
+                        mergedPdf.addPage();
+                    }
                 }
 
                 const mergedPdfBytes = await mergedPdf.save();
